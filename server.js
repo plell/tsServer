@@ -26,6 +26,7 @@ app.get('/api', verifyToken, (req, res)=>{
 app.post('/api/post', verifyToken, (req, res) => {
     const userid = req.userid
     if (userid) res.json({message:'posted!!', userid})
+    else res.sendStatus(405)
 })
 
 app.post('/api/login', async (req, res) => {
@@ -35,7 +36,7 @@ app.post('/api/login', async (req, res) => {
         firstName: 'david',
         lastName: 'plell'
     }
-    const token = await jwt.sign({user},secret, {expiresIn:'120s'})
+    const token = await jwt.sign({user},secret, {expiresIn:'72h'})
     if (token) res.json({token})
 })
 
