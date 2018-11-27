@@ -26,7 +26,7 @@ app.get('/api', verifyToken, (req, res)=>{
 app.post('/api/post', verifyToken, (req, res) => {
     const userid = req.userid
     if (userid) res.json({message:'posted!!', userid})
-    else res.sendStatus(405)
+    else res.sendStatus(404)
 })
 
 app.post('/api/login', async (req, res) => {
@@ -53,7 +53,8 @@ function verifyToken(req,res,next){
         jwt.verify(req.token, secret, (err, token) => {
             if (err) res.sendStatus(403)
             else {
-                req.userid = token.id 
+                req.userid = token.user.id 
+                console.log(token)
                 next()
             }
         })
